@@ -1,0 +1,60 @@
+#include <cstdio>
+#include <algorithm>
+#include <iostream>
+#include <cstring>
+#include <vector>
+#include <cstdlib>
+#include <queue>
+#define inf 0x3f3f3f3f
+using namespace std;
+const int maxn=100;
+struct edge
+{
+    int u,v,w;
+};
+vector <int> g[maxn];
+vector <edge>Edge;
+int w[maxn][maxn],d[maxn];
+bool done[maxn];                  //记录节点是否访被问过
+struct node
+{
+    int d,u;
+    bool operator <(const node &a)const
+    {
+        return d>a.d;
+    }
+};
+int n;
+void Dijkstra(int u)
+{
+    int i;
+    for (i=0;i<n;i++) d[i]=inf;
+    memset(done,0,sizeof(done));
+    d[u]=0;
+    done[u]=true;
+    priority_queue <node> que;
+    node temp;
+    temp.d=d[u];temp.u=u;
+    que.push(temp);
+    while (!que.empty())
+    {
+        temp=que.top();
+        que.pop();
+        u=temp.u;
+        if (done[u]) continue;
+        done[u]=true;
+        int k;
+        for (k=0;k<g[u].size();k++)
+        {
+            edge e=Edge[g[u][k]];
+            if (d[e.v]>d[u]+e.w)
+            {
+                d[e.v]=d[u]+e.w;
+                node tem;
+                tem.d=d[u];
+                tem.u=e.v;
+                que.push(tem);
+            }
+        }
+    }
+}

@@ -1,0 +1,62 @@
+#include <cstdio>
+#include <algorithm>
+#include <iostream>
+#include <cstring>
+#include <vector>
+#include <cstdlib>
+#include <queue>
+#define inf 0x3f3f3f3f
+using namespace std;
+const int maxn=100;
+const int maxm=1000;
+struct edge
+{
+    int u,v,w;
+};
+vector <int> g[maxn];
+vector <edge>Edge;
+int d[maxn],inq[maxn],cnt[maxn];
+int n;
+void addedge(int u,int v,int w)
+{
+    edge temp;
+    temp.u=u;temp.v=v;temp.w=w;
+    Edge.push_back(temp);
+    g[u].push_back(Edge.size()-1);
+}
+bool spfa(int u)
+{
+   int i,k;
+   for (i=0;i<n;i++)
+   {
+       d[i]=inf;inq[i]=0;cnt[i]=0;
+   }
+   d[u]=0;inq[u]=1;cnt[u]=1;
+   queue <int> q;
+   q.push(u);
+   while (!q.empty())
+   {
+       int t=q.front();q.pop();
+       inq[t]=0;
+       for (k=0;k<g[t].size();k++)
+       {
+           edge e=Edge[g[t][k]];
+           if (d[e.v]>d[e.u]+e.w)
+           {
+               d[e.v]=d[e.u]+e.w;
+               if(!inq[e.v])
+               {
+                   inq[e.v]=1;
+                   if (++cnt[e.v]>n) return false;
+                   q.push(e.v);
+               }
+           }
+       }
+   }
+   return true;
+}
+int main()
+{
+
+    return 0;
+}

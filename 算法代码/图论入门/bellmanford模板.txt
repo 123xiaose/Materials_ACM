@@ -1,0 +1,121 @@
+#include <cstdio>
+#include <algorithm>
+#include <iostream>
+#include <cstring>
+#include <vector>
+#include <cstdlib>
+#include <queue>
+#define inf 0x3f3f3f3f
+using namespace std;
+const int maxn=100;
+const int maxm=1000;
+struct edge
+{
+    int u,v,w;
+}Edge[maxm];
+int edgecnt=0;
+int d[maxn];
+int n;
+bool bellmanford(int u)
+{
+    int i,j,k;
+    for (i=0;i<n;i++) d[i]=inf;
+    d[u]=0;
+    for (k=0;k<n-1;k++)
+    {
+        for (i=0;i<edgecnt;i++)
+        {
+            edge e=Edge[i];
+            if (d[e.v]>d[e.u]+e.w)
+                d[e.v]=d[e.u]+e.w;
+        }
+    }
+    for (i=0;i<edgecnt;i++)
+    {
+        edge e=Edge[i];
+        if (d[e.v]>d[e.u]+e.w)
+            return false;
+    }
+    return true;
+}
+int main()
+{
+
+    return 0;
+}
+
+
+//-----------------------------------------------------------------------------------
+
+#include <cstdio>
+#include <algorithm>
+#include <iostream>
+#include <cstring>
+#include <vector>
+#include <cstdlib>
+#include <queue>
+#define inf 0x3f3f3f3f
+using namespace std;
+const int maxn=100;
+const int maxm=1000;
+
+struct edge
+{
+    int u,v,w;
+}Edge[maxn];
+
+int d[maxn];
+int V,E;
+
+void Bellman_Ford(int s)
+{
+    for(int i=0;i<V;i++)d[i]=INF;
+    d[s]=0;
+    while(true)
+    {
+        bool update=false;
+        for(int i=0;i<E;i++)
+        {
+            edge e=Edge[i];
+            if(d[e.u]!=INF && d[e.v]>d[e.u]+e.w)
+            {
+                d[e.v]=d[e.u]+e.w;
+                update=true;
+            }
+        }
+        if(!update)break;
+    }
+}
+
+
+
+//---------------------------------------------------------------------------------------
+
+寻找图中是否存在负圈
+
+
+struct edge
+{
+    int u,v,w;
+}Edge[maxn];
+
+int d[maxn];
+int V,E;
+
+bool Bellman_Ford()
+{
+    memset(d,0,sizeof(d));
+    for(int i=0;i<V;i++)
+    {
+        for(int j=0;j<E;j++)
+        {
+            edge e=Edge[j];
+            if(d[e.v]>d[e.u]+e.w)
+            {
+                d[e.v]=d[e.u]+e.w;
+                if(i==V-1)return true;
+            }
+        }
+    }
+    return false;
+}
